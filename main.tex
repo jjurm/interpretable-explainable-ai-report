@@ -1,0 +1,82 @@
+\documentclass[10pt,conference,compsocconf]{IEEEtran}
+
+\usepackage[
+backend=biber,
+%style=alphabetic,
+%sorting=ynt
+]{biblatex}
+
+\usepackage{float}
+\usepackage{url}
+\usepackage{graphicx}	% For figure environment
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{subcaption}
+\usepackage{cleveref}
+
+\clubpenalty=-100
+%\windowpenalty=-100
+\displaywidowpenalty=-100 
+\linepenalty=5000
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+
+\renewcommand\thesection{Q\arabic{section}}
+
+\addbibresource{ML4Healthcare.bib}
+\defbibheading{references}{\section*{\large References}}
+
+\title{Heart Disease Prediction and Pneumonia Prediction \\
+\large Interpretable and Explainable Classification for Medical Data \\
+\normalsize Project 1 for the Machine Learning for Health Care course (261-5120-00L) \\ \vspace*{20pt}
+April 2023
+}
+
+\author{
+  Sofie Daniëls, Juraj Micko\\
+  Group: 3 \\
+  Department of Computer Science, ETH Zurich, Switzerland
+}
+
+\begin{document}
+\pagenumbering{arabic}
+\maketitle
+\thispagestyle{plain}
+\pagestyle{plain}
+
+
+
+%\begin{abstract}
+%  abc
+%\end{abstract}
+
+\section*{\large PART 1: HEART DISEASE PREDICTION}
+\input{p1q1}
+\input{p1q2}
+\input{p1q3}
+\input{p1q4}
+\input{p1qp3}
+
+\clearpage
+
+\setcounter{section}{0}
+\section*{\large PART 2: PNEUMONIA PREDICTION}
+\input{p2q1}
+\input{p2q2}
+\input{p2q3}
+\input{p2q4}
+\input{p2q5}
+\input{p2qC}
+\input{p2qp3}
+
+%\printbibliography
+\printbibliography[heading=references]
+
+\end{document}

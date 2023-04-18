@@ -1,0 +1,25 @@
+\section{CNN Classifier}
+
+For our CNN, we first created a custom data generator class to allow resizing of the images using center cropping. We also save these images in a dataset for future use, to speed up training.
+Second, we create a function able to convert our data to a dataframe in order to facilitate the use of the custom data generator. Note that we also add additional images ($2.5\%$ of the training set) from the training set to the validation set. Although some images appear to be obtained from the same patient, we did not make a distinction for this when dividing the train and validation data, but instead simply selected images at random.
+
+\subsection*{A. Model Architecture}
+
+We create a model similar to the model described in \cite{keras}, but with one dense layer less and with slightly different dropout ratios. This model has been used extensively in the Kaggle competition \cite{Kermany2018-ms} and has consistently produced good results. For additional data augmentation, we apply a random horizontal flip layer and a random rotation layer (limited to only small rotations).
+
+\subsection*{B. Training}
+
+
+We use an exponentially decaying learning rate, starting from $0.01$ with an overall decay rate of $0.96$ every 800 steps.
+Since we work with images of two classes, binary crossentropy is used as loss function. In addition, we track how our model performs in terms of accuracy and precision/recall, the latter two especially useful in datasets with a class imbalance (like the dataset used in this project).
+
+Note that we account for the class imbalance during training by using a larger weight for the smaller class (normal), and a smaller weight for the larger class (pneumonia). More specifically, we use the formula mentioned in \cite{tf}.
+
+\subsection*{C. Evaluation}
+
+We trained our model for 21 epochs, but used the checkpoint at 7 epochs for visualization in subsequent tasks, due to its clearer results.
+Our 7-epoch model obtained an accuracy of around $90\%$ on the validation dataset, and $75\%$ on the test dataset.
+
+When looking at the precision and recall of $0.77$ and $0.91$ respectively, we notice that the model outputs quite some false positives (i.e. we diagnose a patient with pneumonia when the patient is actually healthy), but relatively few false negatives. This, of course, is preferred behaviour, since we'd rather treat a healthy patient, instead of letting a sick patient (in the worst case) die.
+
+Since our dataset is imbalanced, accuracy is not a very good measure. Technically, a model that outputs 1 (i.e. pneumonia) for every image could already get an accuracy of $62.5\%$ for the test dataset. Still, with an accuracy of around $75\%$, our model clearly performs better, which at the very least means that it has learnt some features related to healthy and sick patients.

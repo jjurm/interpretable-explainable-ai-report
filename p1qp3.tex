@@ -1,0 +1,24 @@
+\section*{General Questions}
+
+\subsection*{Q1: How consistent were the different interpretable/explainable methods? Did they find similar patterns?}
+
+Overall, there are differences in the features marked as important by the different models and explainability frameworks. However, a common trait of the three models (Lasso regression, Decision trees, MLP) is that all rank the two features \texttt{ST\_Slope} and \texttt{MaxHR} among the three most important features. Importances of other relatively important features are also correlated among the three models.
+
+\subsection*{Q2: Given the “interpretable” or “explainable” results of one of the models, how would you explain and present them to a broad audience? Pick one example per part of the project.}
+Let's look at the \autoref{fig:shap_sample_positive_1}, which shows the influence of individual features on the prediction for the sample (which is a sample from the test dataset). Without knowing anything about the patient, the model's output would be the prior, which is $E[f(\overline{x})] = 0.71$. The diagram then explains, due to which features the prediction ends up being $f(x)=1$.
+
+For each feature, we would like to answer the following question: how much would our prediction change if the feature was unavailable? We cannot answer this question directly, since the MLP model requires all features to be present. However, we simulate the unavailability of a feature by replacing its value for the sample with different values from the 'background dataset', which, in our case, is the training dataset.
+This technique is called 'masking', where values of each sample are masked by being replaced with other values from the training dataset.
+Finally, the features (rows) are ordered by their individual contribution to the prediction for the sample.
+
+In our solution we used the exact explainer, which completely enumerates the space of masking patterns and thus has exponential complexity in the number of features. However, many approximation algorithms exist which are suitable for larger datasets.
+
+
+\subsection*{Q3: Did you encounter a tradeoff between accuracy and interpretability/explainability?}
+Since for the MLP model, we used a model-agnostic feature importance explainer, the explainability of the model did not compete with its accuracy. Even if we preferred simpler explainability frameworks such as the Lasso regression or the Decision trees, this would not pose a direct tradeoff on the accuracy of the model, since all models achieved very similar F1 scores on the test dataset, between $79.2\%$ and $80.4\%$.
+
+\subsection*{Q4: Do your findings from the interpretability/explainability methods align with the current medical knowledge about these diseases?}
+It is well-founded in medicine that a patient is likely to have heart disease if the slope of the ST segment in their ECG diagram is other than flat, or if the maximum heart rate is too low.
+
+\subsection*{Q5: If you had to deploy one of the methods in practice, which one would you choose and why?}
+The SHAP explainability framework is, of those implemented in this project, the only model-agnostic, and thus most suitable in practice in general. However, for some specific classifier models, a different explainability framework might be more suitable. For example, if the classifier is a single decision tree, it is reasonable to explain the decision directly from the decision tree structure.

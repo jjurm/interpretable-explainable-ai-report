@@ -1,0 +1,18 @@
+\section*{General Questions}
+
+\subsection*{Q1: How consistent were the different interpretable/ explainable methods? Did they find similar patterns?}
+Both integrated gradients (IG) and Grad-CAM were consistent for healthy patients (Grad-CAM more so than IG), but relatively inconsistent for sick patients (IG more so than Grad-CAM). Overall, integrated gradients was able to find more detailed patterns, while Grad-CAM seemed to focus mainly on the area of the lungs (which makes sense, since Grad-CAM is supposed to be a coarse-grained map). Interestingly, an overlapping pattern for both methods was the focus on the shoulder joint.
+
+\subsection*{Q2: Given the “interpretable” or “explainable” results of one of the models, how would you explain and present them to a broad audience? Pick one example per part of the project.}
+First we can discuss the medical background of the task: in part 2 this would be distinguishing patients with pneumonia from normal patients with the help of X-rays. We can talk about which radiological findings indicate pneumonia, and what features in general are important to look at (e.g. bone doesn't give any information, but lung tissue does).
+Then, we can apply integrated gradients and look for images that most clearly highlight these areas we're interested in. We can also show some edge cases where the model seems to focus on an odd area (possibly due to a bias).
+
+
+\subsection*{Q3: Did you encounter a tradeoff between accuracy and interpretability/explainability?}
+When trained for 21 epochs, the model had a better accuracy than when trained for only 7 epochs, but when applying IG or Grad-CAM, the model ended up focusing on very specific, hard-to-attribute-to-disease features, that were seemingly patient-specific. An increase in accuracy therefore seems to be paired with a decrease in interpretability (although this might not necessarily be a linear relationship).
+
+\subsection*{Q4: Do your findings from the interpretability/ explainability methods align with the current medical knowledge about these diseases?}
+As mentioned in part 2 of the report, most tell-tale signs of pneumonia, such as thickening of the bronchi, opacification of the lung tissue, etc. were highlighted by IG. Grad-CAM only highlighted the lungs, which are of course the main area to be affected by pneumonia.
+
+\subsection*{Q5: If you had to deploy one of the methods in practice, which one would you choose and why?}
+For part 2, IG seems to be more interesting to look at, because of its ability to localize more fine-grained attributions. Still, if the observer does not possess enough medical knowledge, then Grad-CAM might be a better solution, due to its more coarse overlay and its ability to show the more general attribution.
